@@ -1,19 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <ScopeSlot :asyncData="getData()">
+      <template #loading>loading...</template>
+      <template v-slot:error="error">{{error.error}}</template>
+      <template  v-slot:product="{ datas }">{{datas}}</template>
+    </ScopeSlot>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import getProduct from "@/api/data.js";
+import ScopeSlot from "./components/ScopeSlot.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    ScopeSlot,
+  },
+  methods: {
+    async getData() {
+      return await getProduct();
+    },
+  },
+};
 </script>
 
 <style>
